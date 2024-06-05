@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Prediction</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function updateDayOfWeek() {
+            const dateInput = document.getElementById('date').value;
+            if (dateInput) {
+                const date = new Date(dateInput);
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const dayOfWeek = days[date.getUTCDay()];
+                document.getElementById('day_of_week').value = dayOfWeek;
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    
+    <div class="container">
+        
+        <h2>Smart City Vehicle Prediction</h2>
+        <form action="/predict" method="post">
+            <label for="date" style="font-size: 1.2em; color:limegreen;">Date:</label>
+            <input type="date" id="date" name="date" onchange="updateDayOfWeek()" required>
+
+            <label for="hour" style="font-size: 1.2em; color: limegreen;">Hour:</label>
+            <select id="hour" name="hour" required>
+                {% for i in range(24) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="junction" style="font-size: 1.2em; color: limegreen;">Junction:</label>
+            <select id="junction" name="junction" required>
+                {% for i in range(1, 5) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="day_of_week" style="font-size: 1.2em; color: limegreen;">Day of the Week:</label>
+            <input type="text" id="day_of_week" name="day_of_week" readonly required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+    </div>
+</body>
+
+</html>
